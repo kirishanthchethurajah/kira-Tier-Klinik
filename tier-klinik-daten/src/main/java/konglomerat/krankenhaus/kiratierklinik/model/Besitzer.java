@@ -1,5 +1,5 @@
 package konglomerat.krankenhaus.kiratierklinik.model;
 
-public class Eigentümer extends Person {
+public class Besitzer extends Person {
 
 }

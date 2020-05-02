@@ -5,7 +5,7 @@ import java.time.LocalDate;
 public class Tier {
 
   private TierTyp tierTyp;
-  private Eigentümer eigentümer;
+  private Besitzer besitzer;
   private LocalDate geburtsDatum;
 
     public TierTyp getTierTyp() {
@@ -16,12 +16,12 @@ public class Tier {
         this.tierTyp = tierTyp;
     }
 
-    public Eigentümer getEigentümer() {
-        return eigentümer;
+    public Besitzer getBesitzer() {
+        return besitzer;
     }
 
-    public void setEigentümer(Eigentümer eigentümer) {
-        this.eigentümer = eigentümer;
+    public void setBesitzer(Besitzer besitzer) {
+        this.besitzer = besitzer;
     }
 
     public LocalDate getGeburtsDatum() {
