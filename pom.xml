@@ -4,7 +4,7 @@
 
     <groupId>konglomerat.krankenhaus</groupId>
     <artifactId>kira-tier-klinik</artifactId>
-    <version>0.0.1</version>
+    <version>0.0.2-SNAPSHOT</version>
 
     <modules>
         <module>tier-klinik-daten</module>
@@ -52,7 +52,7 @@
 
     <scm>
         <developerConnection>scm:git:git@github.com:kirishanthchethurajah/kira-Tier-Klinik.git</developerConnection>
-        <tag>kira-tier-klinik-0.0.1</tag>
+        <tag>HEAD</tag>
     </scm>
 
 
