@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/layout :: layout(~{::body},'tierArzt')}">
+<head>
+    <meta charset="UTF-8">
+    <title>Liste der Veterinäre</title>
+</head>
+<body>
+<!--/*@thymesVar id="arzt" type="konglomerat.krankenhaus.kiratierklinik.model.TierArzt"*/-->
+<h1 th:text="'Liste der Veterinäre'">Liste der Veterinäre</h1>
+
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th style="width: 150px;">ID</th>
+        <th style="width: 150px;">VorName</th>
+        <th style="width: 150px;">NachName</th>
+    </tr>
+    </thead>
+    <tbody>
+     <tr th:each="arzt: ${tierArzt}">
+         <td th:text="${arzt?.id}">1</td>
+         <td th:text="${arzt?.vorName}">krish</td>
+         <td th:text="${arzt?.nachName}">Chethu</td>
+     </tr>
+    </tbody>
+</table>
+
+</body>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/layout :: layout(~{::body},'besitzer')}">
+<head>
+    <meta charset="UTF-8">
+    <title>Liste der Besitzer</title>
+</head>
+<body>
+<!--/*@thymesVar id="inhaber" type="konglomerat.krankenhaus.kiratierklinik.model.Besitzer"*/-->
+<h2 th:text="'Liste der Besitzer'">Liste der Besitzer</h2>
+
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th style="width: 150px;">ID</th>
+        <th style="width: 150px;">VorName</th>
+        <th style="width: 150px;">NachName</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="inhaber: ${besitzer}">
+        <td th:text="${inhaber?.id}">1</td>
+        <td th:text="${inhaber?.vorName}">krish</td>
+        <td th:text="${inhaber?.nachName}">Chethu</td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>
