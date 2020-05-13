@@ -18,12 +18,30 @@ import java.util.Set;
 @Table(name="besitzer")
 public class Besitzer extends Person {
     @Builder
-    public Besitzer(Long id, String vorName, String nachName, String adresse, String stadt, String telefonnummer) {
+    public Besitzer(Long id, String vorName, String nachName, String adresse, String stadt, String telefonnummer, Set<Tier> tiere) {
         super(id, vorName, nachName, adresse, stadt, telefonnummer);
-        this.tiere = tiere;
+        if(tiere != null) {
+            this.tiere = tiere;
+        }
     }
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "besitzer")
     private Set<Tier> tiere = new HashSet<>();
+
+    public Tier getTier(String name){
+        return getTier(name, false);
+    }
+
+    public Tier getTier(String name, boolean isNeu){
+        for(Tier tier: tiere) {
+            if(!isNeu || !tier.isNew()) {
+                String comp = tier.getName();
+                if(comp.equalsIgnoreCase(name.toLowerCase())){
+                    return  tier;
+                }
+            }
+        }
+        return  null;
+    }
 
 }

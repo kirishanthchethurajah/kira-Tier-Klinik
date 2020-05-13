@@ -1,0 +1,61 @@
+<html xmlns:th="https://www.thymeleaf.org"
+  th:replace="~{fragments/layout :: layout (~{::body},'besitzer')}">
+
+<body>
+
+  <h2>
+    <th:block th:if="${besuch['new']}">Neu </th:block>
+    Besuch
+  </h2>
+
+  <b>Tier</b>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Geburts Datum</th>
+        <th>Typ</th>
+        <th>Besitzer</th>
+      </tr>
+    </thead>
+    <tr>
+      <td th:text="${tier.name}" /></td>
+      <td
+        th:text="${#temporals.format(tier.geburtsDatum, 'yyyy-MM-dd')}" /></td>
+      <td th:text="${tier.tierTyp}" /></td>
+      <td
+        th:text="${tier.besitzer?.vorName + ' ' + tier.besitzer?.nachName}" /></td>
+    </tr>
+  </table>
+
+  <form th:object="${besuch}" class="form-horizontal" method="post">
+    <div class="form-group has-feedback">
+      <input
+        th:replace="~{fragments/inputField :: input ('Datum', 'lokaleDatum', 'date')}"  />
+      <input
+        th:replace="~{fragments/inputField :: input ('Beschreibung', 'beschreibung', 'text')}" />
+    </div>
+
+    <div class="form-group">
+      <div class="col-sm-offset-2 col-sm-10">
+        <input type="hidden" name="tierId" th:value="${tier.id}" />
+        <button class="btn btn-default" type="submit">Add Visit</button>
+      </div>
+    </div>
+  </form>
+
+  <br />
+  <b>Vorherige Besuche</b>
+  <table class="table table-striped">
+    <tr>
+      <th>Datum</th>
+      <th>Beschreibung</th>
+    </tr>
+    <tr th:if="${!besuch['new']}" th:each="visit : ${tier.besuch}">
+      <td th:text="${#temporals.format(besuch.lokaleDatum, 'yyyy-MM-dd')}" /></td>
+      <td th:text=" ${besuch.beschreibung}" /></td>
+    </tr>
+  </table>
+
+</body>
+</html>

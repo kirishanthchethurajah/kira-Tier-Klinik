@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 @Profile({"default",",map"})
@@ -74,5 +75,12 @@ public class BesitzerServiceMap extends AbstractServiceMap<Besitzer, Long> imple
                 .findFirst().
                 orElse(null);
 
+    }
+
+    @Override
+    public Set<Besitzer> findAllByNachNameLike(String nachName) {
+        return this.findAll()
+                .stream()
+                .filter(besitzer -> besitzer.getNachName().contains(nachName)).collect(Collectors.toSet());
     }
 }

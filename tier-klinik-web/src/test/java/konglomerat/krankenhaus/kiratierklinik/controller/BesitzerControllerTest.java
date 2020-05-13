@@ -2,9 +2,11 @@ package konglomerat.krankenhaus.kiratierklinik.controller;
 
 import konglomerat.krankenhaus.kiratierklinik.model.Besitzer;
 import konglomerat.krankenhaus.kiratierklinik.service.BesitzerService;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentMatchers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -16,9 +18,11 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import java.util.HashSet;
 import java.util.Set;
 
+import static org.hamcrest.Matchers.hasProperty;
 import static org.hamcrest.Matchers.hasSize;
-import static org.mockito.Mockito.verifyNoInteractions;
-import static org.mockito.Mockito.when;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
@@ -40,13 +44,77 @@ class BesitzerControllerTest {
       mockMvc = MockMvcBuilders.standaloneSetup(besitzerController).build();
     }
 
+
     @Test
-    void listBesitzer() throws Exception {
-        verifyNoInteractions(besitzerService);
-        when(besitzerService.findAll()).thenReturn(besitzerSet);
-        mockMvc.perform(MockMvcRequestBuilders.get("/besitzer/"))
+    void anzeigeBesitzer() throws Exception {
+        when(besitzerService.findById(anyLong())).thenReturn(Besitzer.builder().id(143L).vorName("Angelo").nachName("Mathews").adresse("Hbf").build());
+        mockMvc.perform(MockMvcRequestBuilders.get("/besitzer/143"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(view().name("besitzer/index"))
+                .andExpect(view().name("besitzer/besitzerAngaben"))
+                .andExpect(model().attribute("besitzer",hasProperty("vorName", Matchers.is("Angelo"))));
+    }
+
+    @Test
+    void prozessFormFindenEins() throws Exception {
+        when(besitzerService.findAllByNachNameLike(anyString())).thenReturn((besitzerSet));
+        besitzerSet.removeIf(besitzer -> besitzer.getId()==2l);
+        mockMvc.perform(MockMvcRequestBuilders.get("/besitzer"))
+                .andExpect(MockMvcResultMatchers.status().is3xxRedirection())
+                .andExpect(view().name("redirect:/besitzer/1"));
+    }
+
+
+    @Test
+    void prozessFormFindenViele() throws Exception {
+        when(besitzerService.findAllByNachNameLike(anyString())).thenReturn((besitzerSet));
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/besitzer"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(view().name("besitzer/besitzerList"))
                 .andExpect(model().attribute("besitzer",hasSize(2)));
+
+    }
+
+    @Test
+    void erstellenBesitzer() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/besitzer/neu"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(view().name("besitzer/besitzerFormularErstellenOderAktualisieren"))
+                .andExpect(model().attributeExists("besitzer"));
+        verifyNoInteractions(besitzerService);
+    }
+
+    @Test
+    void prozessErstellenBesitzer() throws Exception{
+        when(besitzerService.save(ArgumentMatchers.any())).thenReturn(Besitzer.builder().id(123L).vorName("Tom").nachName("Cruise").adresse("HafenStrasse").build());
+        mockMvc.perform(MockMvcRequestBuilders.post("/besitzer/neu"))
+                .andExpect(MockMvcResultMatchers.status().is3xxRedirection())
+                .andExpect(view().name("redirect:/besitzer/123"))
+                .andExpect(model().attributeExists("besitzer"));
+
+        verify(besitzerService).save(ArgumentMatchers.any());
+    }
+
+    @Test
+    void bearbeitenBesitzer() throws Exception {
+        when(besitzerService.findById(anyLong())).thenReturn(Besitzer.builder().id(123L).vorName("Tom").nachName("Cruise").adresse("HafenStrasse").build());
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/besitzer/123/edit"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(view().name("besitzer/besitzerFormularErstellenOderAktualisieren"))
+                .andExpect(model().attributeExists("besitzer"));
+
+    }
+
+
+    @Test
+    void prozessBearbeitenBesitzer() throws Exception {
+        when(besitzerService.save(ArgumentMatchers.any())).thenReturn(Besitzer.builder().id(123L).vorName("Tom").nachName("Cruise").adresse("HafenStrasse").build());
+        mockMvc.perform(MockMvcRequestBuilders.post("/besitzer/123/edit"))
+                .andExpect(MockMvcResultMatchers.status().is3xxRedirection())
+                .andExpect(view().name("redirect:/besitzer/123"))
+                .andExpect(model().attributeExists("besitzer"));
+
+        verify(besitzerService).save(ArgumentMatchers.any());
     }
 }

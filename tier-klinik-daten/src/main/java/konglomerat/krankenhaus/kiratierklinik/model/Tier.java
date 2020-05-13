@@ -10,12 +10,23 @@ import java.util.Set;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 @Entity
 @Table(name = "tiere")
 public class Tier extends BaseEntity{
+    @Builder
+    public Tier(Long id, String name, TierTyp tierTyp,  Besitzer besitzer,LocalDate geburtsDatum, Set<Besuch> besuch) {
+        super(id);
+        this.name = name;
+        this.tierTyp = tierTyp;
+        this.besitzer = besitzer;
+        this.geburtsDatum = geburtsDatum;
+        if(besuch == null || besuch.size()>0 ) {
+            this.besuch = besuch;
+        }
+    }
+
     @Column(name = "name")
-    private String Name;
+    private String name;
     @ManyToOne
     @JoinColumn(name = "tiertyp_id")
     private TierTyp tierTyp;
@@ -27,45 +38,11 @@ public class Tier extends BaseEntity{
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "tier")
     private Set<Besuch> besuch = new HashSet<>();
 
-    public Set<Besuch> getBesuch() {
-        return besuch;
-    }
-
-    public void setBesuch(Set<Besuch> besuch) {
-        this.besuch = besuch;
-    }
 
 
 
-    public String getName() {
-        return Name;
-    }
-
-    public void setName(String name) {
-        Name = name;
-    }
-
-    public TierTyp getTierTyp() {
-        return tierTyp;
-    }
-
-    public void setTierTyp(TierTyp tierTyp) {
-        this.tierTyp = tierTyp;
-    }
-
-    public Besitzer getBesitzer() {
-        return besitzer;
-    }
-
-    public void setBesitzer(Besitzer besitzer) {
-        this.besitzer = besitzer;
-    }
-
-    public LocalDate getGeburtsDatum() {
-        return geburtsDatum;
-    }
-
-    public void setGeburtsDatum(LocalDate geburtsDatum) {
-        this.geburtsDatum = geburtsDatum;
-    }
 }
+
+
+
+

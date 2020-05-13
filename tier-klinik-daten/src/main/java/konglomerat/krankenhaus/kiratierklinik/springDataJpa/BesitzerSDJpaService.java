@@ -30,6 +30,11 @@ public class BesitzerSDJpaService implements BesitzerService {
     }
 
     @Override
+    public Set<Besitzer> findAllByNachNameLike(String nachName) {
+        return besitzerRepository.findByNachNameLike(nachName);
+    }
+
+    @Override
     public Besitzer findById(Long aLong) {
         return besitzerRepository.findById(aLong).orElse(null);
     }

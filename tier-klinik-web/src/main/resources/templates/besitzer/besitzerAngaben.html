@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+
+<html xmlns:th="https://www.thymeleaf.org"
+  th:replace="~{fragments/layout :: layout (~{::body},'besitzer')}">
+
+  <body>
+  
+  
+    <h2>Eigentümer-Informationen</h2>
+  
+  
+    <table class="table table-striped" th:object="${besitzer}">
+      <tr>
+        <th>Name</th>
+        <td><b th:text="*{vorName + ' ' + nachName}"></b></td>
+      </tr>
+      <tr>
+        <th>Adresse</th>
+        <td th:text="*{adresse}" /></td>
+      </tr>
+      <tr>
+        <th>Stadt</th>
+        <td th:text="*{stadt}" /></td>
+      </tr>
+      <tr>
+        <th>Telefon</th>
+        <td th:text="*{telefonnummer}" /></td>
+      </tr>
+    </table>
+  
+    <a th:href="@{{id}/edit(id=${besitzer.id})}" class="btn btn-default">Edit
+      Owner</a>
+    <a th:href="@{{id}/tier/neu(id=${besitzer.id})}" class="btn btn-default">Add
+      New Pet</a>
+  
+    <br />
+    <br />
+    <br />
+    <h2>Tiere und Besuche</h2>
+  
+    <table class="table table-striped">
+  
+      <tr th:each="tier : ${besitzer.tiere}">
+        <td valign="top">
+          <dl class="dl-horizontal">
+            <dt>Name</dt>
+            <dd th:text="${tier.name}" /></dd>
+            <dt>Birth Date</dt>
+            <dd
+              th:text="${#temporals.format(tier.geburtsDatum, 'yyyy-MM-dd')}" /></dd>
+            <dt>Type</dt>
+            <dd th:text="${tier.tierTyp.name}" /></dd>
+          </dl>
+        </td>
+        <td valign="top">
+          <table class="table-condensed">
+            <thead>
+              <tr>
+                <th>Besuch Datum</th>
+                <th>Beschreibung</th>
+              </tr>
+            </thead>
+            <tr th:each="besuch1 : ${tier.besuch}">
+              <td th:text="${#temporals.format(besuch1.lokaleDatum, 'yyyy-MM-dd')}"></td>
+              <td th:text="${besuch1?.beschreibung}"></td>
+            </tr>
+            <tr>
+              <td><a
+                th:href="@{{besitzerId}/tier/{tierId}/edit(besitzerId=${besitzer.id},tierId=${tier.id})}">Edit
+                  Pet</a></td>
+              <td><a
+                th:href="@{{besitzerId}/tier/{tierId}/besuch/neu(besitzerId=${besitzer.id},tierId=${tier.id})}">Add
+                  Visit</a></td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+  
+    </table>
+  
+  </body>
+
+</html>

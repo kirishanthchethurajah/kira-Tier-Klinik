@@ -9,12 +9,21 @@ import javax.persistence.Table;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 @Entity
 @Table(name = "tier_typ")
 public class TierTyp extends BaseEntity{
 
+    @Builder
+    public TierTyp(Long id, String name){
+        super(id);
+        this.name=name;
+    }
+
     @Column(name = "name")
     private String name;
 
+    @Override
+    public String toString() {
+        return name;
+    }
 }

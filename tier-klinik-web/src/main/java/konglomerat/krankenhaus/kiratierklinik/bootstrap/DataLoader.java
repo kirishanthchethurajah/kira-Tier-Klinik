@@ -35,12 +35,12 @@ public class DataLoader implements CommandLineRunner{
 
     private void loadData() {
         TierTyp tierTyp1 = new TierTyp();
-        tierTyp1.setName("Dog");
+        tierTyp1.setName("Hund");
         TierTyp savedTierTyp1 = tierTypService.save(tierTyp1);
 
 
         TierTyp tierTyp2 = new TierTyp();
-        tierTyp2.setName("Cat");
+        tierTyp2.setName("Katze");
 
         tierTypService.save(tierTyp2);
 
