@@ -43,9 +43,9 @@ public class TierArztServiceMap extends AbstractServiceMap<TierArzt, Long> imple
     public TierArzt save(TierArzt object) {
         if(object.getFachgebiete().size()>0){
             object.getFachgebiete().forEach(fachGebiet -> {
-                if(fachGebiet.getId() == null){
+                if(fachGebiet.getKId() == null){
                     FachGebiet savedFachGebiet = fachGebietService.save(fachGebiet);
-                    fachGebiet.setId(savedFachGebiet.getId());
+                    fachGebiet.setKId(savedFachGebiet.getKId());
                 }
             });
 

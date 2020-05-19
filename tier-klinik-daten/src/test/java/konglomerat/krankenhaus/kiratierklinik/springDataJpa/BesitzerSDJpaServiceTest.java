@@ -36,7 +36,7 @@ class BesitzerSDJpaServiceTest {
 
     @BeforeEach
     void setUp(){
-        besitzer = Besitzer.builder().id(4L).vorName("Dom").nachName("Terrence").build();
+        besitzer = Besitzer.builder().kId(4L).vorName("Dom").nachName("Terrence").build();
 
     }
 
@@ -57,22 +57,22 @@ class BesitzerSDJpaServiceTest {
     void findById() {
         when(besitzerRepository.findById(any())).thenReturn(Optional.ofNullable(besitzer));
 
-        assertEquals(4L,besitzerSDJpaService.findById(4L).getId());
+        assertEquals(4L,besitzerSDJpaService.findById(4L).getKId());
 
     }
 
     @Test
     void findAll() {
-        Set<Besitzer> besitzers = new HashSet<>();
-        besitzers.add(Besitzer.builder().id(10L).vorName("Mathew").nachName("klaus").build());
-        besitzers.add(Besitzer.builder().id(6L).build());
-        when(besitzerRepository.findAll()).thenReturn(besitzers);
+        Set<Besitzer> besitzers1 = new HashSet<>();
+        besitzers1.add(Besitzer.builder().kId(10L).vorName("Mathew").nachName("klaus").build());
+        besitzers1.add(Besitzer.builder().kId(5L).vorName("Christopher").nachName("Nolan").build());
+        when(besitzerRepository.findAll()).thenReturn(besitzers1);
         assertEquals(2,besitzerSDJpaService.findAll().size());
     }
 
     @Test
     void save() {
-        Besitzer check= Besitzer.builder().id(10L).vorName("Christopher").nachName("Nolan").build();
+        Besitzer check= Besitzer.builder().kId(10L).vorName("Christopher").nachName("Nolan").build();
         when(besitzerRepository.save(any())).thenReturn(check);
         Besitzer tmp = besitzerSDJpaService.save(check);
         assertNotNull(tmp);

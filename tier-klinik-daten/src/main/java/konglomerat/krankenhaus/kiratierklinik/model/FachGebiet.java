@@ -14,7 +14,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "fachgebiete")
 public class FachGebiet extends BaseEntity{
-    @Column(name="beschreibung")
+    @Column(name = "beschreibung")
     private String beschreibung;
 
 }

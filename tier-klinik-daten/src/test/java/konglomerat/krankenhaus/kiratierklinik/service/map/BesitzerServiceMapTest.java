@@ -13,7 +13,7 @@ class BesitzerServiceMapTest {
     @BeforeEach
     void setUp() {
         besitzerServiceMap = new BesitzerServiceMap(new TierServiceMap(), new TierTypServiceMap() );
-        besitzerServiceMap.save(Besitzer.builder().id(1L).vorName("Richard").adresse("nirgendwo").nachName("Bauer").build());
+        besitzerServiceMap.save(Besitzer.builder().kId(1L).vorName("Richard").adresse("nirgendwo").nachName("Bauer").build());
     }
 
     @Test
@@ -24,7 +24,7 @@ class BesitzerServiceMapTest {
 
     @Test
     void findById() {
-        assertEquals(1L, besitzerServiceMap.findById(1L).getId());
+        assertEquals(1L, besitzerServiceMap.findById(1L).getKId());
     }
 
     @Test
@@ -35,7 +35,7 @@ class BesitzerServiceMapTest {
 
     @Test
     void delete() {
-        if(besitzerServiceMap.findById(1L).getId()!=null){
+        if(besitzerServiceMap.findById(1L).getKId()!=null){
             besitzerServiceMap.delete(besitzerServiceMap.findById(1L));
 
         }
@@ -45,7 +45,7 @@ class BesitzerServiceMapTest {
     @Test
     void save() {
 
-        assertNotNull(besitzerServiceMap.save(Besitzer.builder().id(2L).vorName("Rachael").adresse("jetzt hier").build()));
+        assertNotNull(besitzerServiceMap.save(Besitzer.builder().kId(2L).vorName("Rachael").adresse("jetzt hier").build()));
 
 
     }

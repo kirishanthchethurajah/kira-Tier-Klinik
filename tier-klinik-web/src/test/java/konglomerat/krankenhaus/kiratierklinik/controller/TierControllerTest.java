@@ -47,11 +47,11 @@ class TierControllerTest {
 
     @BeforeEach
     void setUp() {
-        besitzer = Besitzer.builder().id(1L).vorName("Christopher").nachName("Nolan").build();
+        besitzer = Besitzer.builder().kId(1L).vorName("Christopher").nachName("Nolan").build();
 
         tierTypSet = new HashSet<>();
-        tierTypSet.add(TierTyp.builder().id(1L).name("Hund").build());
-        tierTypSet.add(TierTyp.builder().id(2L).name("Katze").build());
+        tierTypSet.add(TierTyp.builder().kId(1L).name("Hund").build());
+        tierTypSet.add(TierTyp.builder().kId(2L).name("Katze").build());
 
         mockMvc = MockMvcBuilders.standaloneSetup(tierController).build();
     }
@@ -86,7 +86,7 @@ class TierControllerTest {
     void aktualisierenFormular() throws Exception{
         when(besitzerService.findById(anyLong())).thenReturn(besitzer);
         when(tierTypService.findAll()).thenReturn(tierTypSet);
-        when(tierService.findById(anyLong())).thenReturn(Tier.builder().id(1L).build());
+        when(tierService.findById(anyLong())).thenReturn(Tier.builder().kId(1L).build());
 
         mockMvc.perform(get("/besitzer/1/tier/1/edit"))
                 .andExpect(status().isOk())

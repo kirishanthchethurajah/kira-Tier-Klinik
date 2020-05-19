@@ -6,24 +6,24 @@
 </head>
 <body>
 <!--/*@thymesVar id="arzt" type="konglomerat.krankenhaus.kiratierklinik.model.TierArzt"*/-->
-<h1 th:text="'Liste der Veterinäre'">Liste der Veterinäre</h1>
+<h2>Veterinäre</h2>
 
-<table class="table table-striped">
+<table id="vets" class="table table-striped">
     <thead>
     <tr>
-        <th style="width: 150px;">ID</th>
-        <th style="width: 150px;">VorName</th>
-        <th style="width: 150px;">NachName</th>
+        <th>Name</th>
+        <th>Specialties</th>
     </tr>
     </thead>
     <tbody>
-     <tr th:each="arzt: ${tierArzt}">
-         <td th:text="${arzt?.id}">1</td>
-         <td th:text="${arzt?.vorName}">krish</td>
-         <td th:text="${arzt?.nachName}">Chethu</td>
-     </tr>
+    <tr th:each="arzt : ${tierArzt}">
+        <td th:text="${arzt.vorName + ' ' + arzt.nachName}"></td>
+        <td><span th:each="fachGebiet : ${arzt.fachgebiete}"
+                  th:text="${fachGebiet.beschreibung + ' '}" /> <span
+                th:if="${arzt?.fachgebiete?.size() == 0}">none</span></td>
+    </tr>
     </tbody>
 </table>
-
 </body>
 </html>
+

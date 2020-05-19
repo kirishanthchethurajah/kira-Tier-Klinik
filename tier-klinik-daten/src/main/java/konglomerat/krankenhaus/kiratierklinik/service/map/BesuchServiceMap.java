@@ -40,7 +40,7 @@ public class BesuchServiceMap extends AbstractServiceMap<Besuch, Long> implement
     @Override
     public Besuch save(Besuch object) {
         if(object.getTier() == null || object.getTier().getBesitzer() == null ||
-                object.getTier().getId() == null || object.getTier().getBesitzer().getId() == null)
+                object.getTier().getKId() == null || object.getTier().getBesitzer().getKId() == null)
         {
             throw new RuntimeException("Besuch ist nicht gultig");
         }

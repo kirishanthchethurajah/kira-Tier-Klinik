@@ -14,8 +14,8 @@ import javax.persistence.Table;
 public class TierTyp extends BaseEntity{
 
     @Builder
-    public TierTyp(Long id, String name){
-        super(id);
+    public TierTyp(Long kId, String name){
+        super(kId);
         this.name=name;
     }
 

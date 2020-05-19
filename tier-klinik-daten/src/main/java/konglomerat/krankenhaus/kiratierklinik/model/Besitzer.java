@@ -18,8 +18,8 @@ import java.util.Set;
 @Table(name="besitzer")
 public class Besitzer extends Person {
     @Builder
-    public Besitzer(Long id, String vorName, String nachName, String adresse, String stadt, String telefonnummer, Set<Tier> tiere) {
-        super(id, vorName, nachName, adresse, stadt, telefonnummer);
+    public Besitzer(Long kId, String vorName, String nachName, String adresse, String stadt, String telefonnummer, Set<Tier> tiere) {
+        super(kId, vorName, nachName, adresse, stadt, telefonnummer);
         if(tiere != null) {
             this.tiere = tiere;
         }

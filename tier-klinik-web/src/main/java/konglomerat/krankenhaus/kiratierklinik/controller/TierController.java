@@ -67,7 +67,7 @@ public class TierController {
             return "tierFormularErstellenOderAktualisieren";
         } else {
             tierService.save(tier);
-            return "redirect:/besitzer/"+besitzer.getId();
+            return "redirect:/besitzer/"+besitzer.getKId();
         }
 
     }
@@ -88,7 +88,7 @@ public class TierController {
         } else {
             besitzer.getTiere().add(tier);
             tierService.save(tier);
-            return "redirect:/besitzer/"+besitzer.getId();
+            return "redirect:/besitzer/"+besitzer.getKId();
         }
 
     }

@@ -4,7 +4,7 @@ import konglomerat.krankenhaus.kiratierklinik.service.TierArztService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-@RequestMapping("/tierarzt")
+
 @Controller
 public class TierArztController {
 
@@ -14,9 +14,15 @@ public class TierArztController {
 
     private TierArztService tierArztService;
 
-    @RequestMapping({"/index","/","","/index.html","/finden"})
+
+
+    @RequestMapping({"/tierarzt/index","/tierarzt/","","//tierarzt/index.html","/tierarzt/finden"})
     public String listTierArzt(Model model){
         model.addAttribute("tierArzt",tierArztService.findAll());
+
         return "tierarzt/index";
     }
+
+
+
 }

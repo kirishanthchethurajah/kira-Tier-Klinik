@@ -44,12 +44,16 @@ public class DataLoader implements CommandLineRunner{
 
         tierTypService.save(tierTyp2);
 
+        FachGebiet fachGebiet1 = new FachGebiet();
+        fachGebiet1.setBeschreibung("chirurg");
+        FachGebiet savedFachGebiet1 = fachGebietService.save(fachGebiet1);
+
 
         Besitzer besitzer1= new Besitzer();
         besitzer1.setVorName("Steffen");
         besitzer1.setNachName("Planthaber");
         besitzer1.setAdresse("Friedrich-Engels-strasse, 8M");
-        besitzer1.setTelefonnummer("4915414885469");
+        besitzer1.setTelefonnummer("4915414885");
         besitzer1.setStadt("Hamburg");
 
 
@@ -58,7 +62,7 @@ public class DataLoader implements CommandLineRunner{
         tier1.setName("john");
         tier1.setTierTyp(savedTierTyp1);
         tier1.setBesitzer(besitzer1);
-        tier1.setGeburtsDatum(LocalDate.ofEpochDay(23-07-2011));
+        tier1.setGeburtsDatum(LocalDate.now());
 
         besitzer1.getTiere().add(tier1);
 
@@ -73,16 +77,15 @@ public class DataLoader implements CommandLineRunner{
 
 
 
-        FachGebiet fachGebiet1 = new FachGebiet();
-        fachGebiet1.setBeschreibung("chirurg");
-        FachGebiet savedFachGebiet1 = fachGebietService.save(fachGebiet1);
+
 
         TierArzt tierArzt1= new TierArzt();
         tierArzt1.setVorName("Anna");
         tierArzt1.setNachName("Foerster");
         tierArzt1.setAdresse("Bibliotherstrasse, 23");
-        tierArzt1.setTelefonnummer("4915564805469");
+        tierArzt1.setTelefonnummer("4915564801");
         tierArzt1.setStadt("Bremen");
+
 
 
         tierArzt1.getFachgebiete().add(savedFachGebiet1);

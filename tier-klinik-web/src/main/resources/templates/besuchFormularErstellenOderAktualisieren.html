@@ -1,6 +1,6 @@
 <html xmlns:th="https://www.thymeleaf.org"
-  th:replace="~{fragments/layout :: layout (~{::body},'besitzer')}">
-
+  th:replace="~{fragments/layout :: layout (~{::body},'tier')}">
+<!--/*@thymesVar id="tier" type="konglomerat.krankenhaus.kiratierklinik.model.Tier"*/-->
 <body>
 
   <h2>
@@ -19,6 +19,7 @@
       </tr>
     </thead>
     <tr>
+
       <td th:text="${tier.name}" /></td>
       <td
         th:text="${#temporals.format(tier.geburtsDatum, 'yyyy-MM-dd')}" /></td>
@@ -38,7 +39,7 @@
 
     <div class="form-group">
       <div class="col-sm-offset-2 col-sm-10">
-        <input type="hidden" name="tierId" th:value="${tier.id}" />
+        <input type="hidden" name="tierId" th:value="${tier.KId}" />
         <button class="btn btn-default" type="submit">Add Visit</button>
       </div>
     </div>

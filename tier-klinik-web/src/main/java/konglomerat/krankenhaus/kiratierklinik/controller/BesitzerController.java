@@ -38,7 +38,6 @@ public class BesitzerController {
     @GetMapping
     public String prozessFormFinden(Besitzer besitzer, BindingResult bindingResult,Model model){
         //Finden alle besitzer
-        System.out.println("cominf here");
         if (besitzer.getNachName() == null) {
             besitzer.setNachName("");
         }
@@ -50,7 +49,7 @@ public class BesitzerController {
          return  "besitzer/besitzerFinden";
         }else if(besitzerList.size() ==1){
 
-            return "redirect:/besitzer/" +besitzerList.stream().findFirst().get().getId();
+            return "redirect:/besitzer/" +besitzerList.stream().findFirst().get().getKId();
         }
         model.addAttribute("besitzer",besitzerList);
         return "besitzer/besitzerList";
@@ -77,7 +76,7 @@ public class BesitzerController {
             return "besitzer/besitzerFormularErstellenOderAktualisieren";
         } else{
             Besitzer besitzer1 = besitzerService.save(besitzer);
-            return "redirect:/besitzer/"+ besitzer1.getId();
+            return "redirect:/besitzer/"+ besitzer1.getKId();
         }
 
     }
@@ -94,9 +93,9 @@ public class BesitzerController {
      {
          return "besitzer/besitzerFormularErstellenOderAktualisieren";
      } else{
-         besitzer.setId(besitzerId);
+         besitzer.setKId(besitzerId);
          Besitzer besitzer1= besitzerService.save(besitzer);
-         return "redirect:/besitzer/"+ besitzer1.getId();
+         return "redirect:/besitzer/"+ besitzer1.getKId();
 
      }
     }

@@ -39,15 +39,15 @@ class BesitzerControllerTest {
     @BeforeEach
     void setup(){
       besitzerSet= new HashSet<>();
-      besitzerSet.add(Besitzer.builder().id(1L).vorName("Christopher").nachName("Nolan").build());
-      besitzerSet.add(Besitzer.builder().id(2L).vorName("Mathew").nachName("klaus").build());
+      besitzerSet.add(Besitzer.builder().kId(1L).vorName("Christopher").nachName("Nolan").build());
+      besitzerSet.add(Besitzer.builder().kId(2L).vorName("Mathew").nachName("klaus").build());
       mockMvc = MockMvcBuilders.standaloneSetup(besitzerController).build();
     }
 
 
     @Test
     void anzeigeBesitzer() throws Exception {
-        when(besitzerService.findById(anyLong())).thenReturn(Besitzer.builder().id(143L).vorName("Angelo").nachName("Mathews").adresse("Hbf").build());
+        when(besitzerService.findById(anyLong())).thenReturn(Besitzer.builder().kId(143L).vorName("Angelo").nachName("Mathews").adresse("Hbf").build());
         mockMvc.perform(MockMvcRequestBuilders.get("/besitzer/143"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(view().name("besitzer/besitzerAngaben"))
@@ -57,7 +57,7 @@ class BesitzerControllerTest {
     @Test
     void prozessFormFindenEins() throws Exception {
         when(besitzerService.findAllByNachNameLike(anyString())).thenReturn((besitzerSet));
-        besitzerSet.removeIf(besitzer -> besitzer.getId()==2l);
+        besitzerSet.removeIf(besitzer -> besitzer.getKId()==2l);
         mockMvc.perform(MockMvcRequestBuilders.get("/besitzer"))
                 .andExpect(MockMvcResultMatchers.status().is3xxRedirection())
                 .andExpect(view().name("redirect:/besitzer/1"));
@@ -86,7 +86,7 @@ class BesitzerControllerTest {
 
     @Test
     void prozessErstellenBesitzer() throws Exception{
-        when(besitzerService.save(ArgumentMatchers.any())).thenReturn(Besitzer.builder().id(123L).vorName("Tom").nachName("Cruise").adresse("HafenStrasse").build());
+        when(besitzerService.save(ArgumentMatchers.any())).thenReturn(Besitzer.builder().kId(123L).vorName("Tom").nachName("Cruise").adresse("HafenStrasse").build());
         mockMvc.perform(MockMvcRequestBuilders.post("/besitzer/neu"))
                 .andExpect(MockMvcResultMatchers.status().is3xxRedirection())
                 .andExpect(view().name("redirect:/besitzer/123"))
@@ -97,7 +97,7 @@ class BesitzerControllerTest {
 
     @Test
     void bearbeitenBesitzer() throws Exception {
-        when(besitzerService.findById(anyLong())).thenReturn(Besitzer.builder().id(123L).vorName("Tom").nachName("Cruise").adresse("HafenStrasse").build());
+        when(besitzerService.findById(anyLong())).thenReturn(Besitzer.builder().kId(123L).vorName("Tom").nachName("Cruise").adresse("HafenStrasse").build());
 
         mockMvc.perform(MockMvcRequestBuilders.get("/besitzer/123/edit"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
@@ -109,7 +109,7 @@ class BesitzerControllerTest {
 
     @Test
     void prozessBearbeitenBesitzer() throws Exception {
-        when(besitzerService.save(ArgumentMatchers.any())).thenReturn(Besitzer.builder().id(123L).vorName("Tom").nachName("Cruise").adresse("HafenStrasse").build());
+        when(besitzerService.save(ArgumentMatchers.any())).thenReturn(Besitzer.builder().kId(123L).vorName("Tom").nachName("Cruise").adresse("HafenStrasse").build());
         mockMvc.perform(MockMvcRequestBuilders.post("/besitzer/123/edit"))
                 .andExpect(MockMvcResultMatchers.status().is3xxRedirection())
                 .andExpect(view().name("redirect:/besitzer/123"))
@@ -117,4 +117,17 @@ class BesitzerControllerTest {
 
         verify(besitzerService).save(ArgumentMatchers.any());
     }
+
+    @Test
+    void prozessFormFinden() throws Exception {
+        when(besitzerService.findAllByNachNameLike("%%"))
+                .thenReturn(besitzerSet);
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/besitzer/").param("nachName",""))
+        .andExpect(MockMvcResultMatchers.status().isOk())
+        .andExpect(view().name("besitzer/besitzerList"))
+        .andExpect(model().attribute("besitzer",hasSize(2)));
+    }
+
+
 }

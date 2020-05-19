@@ -19,7 +19,7 @@
         <tbody>
           <tr th:each="inhaber : ${besitzer}">
               <td>
-                  <a th:href="@{/inhaber/__${inhaber.id}__}" th:text="${inhaber.vorName + ' ' + inhaber.nachName}"/></a>
+                  <a th:href="@{/inhaber/__${inhaber.KId}__}" th:text="${inhaber.vorName + ' ' + inhaber.nachName}"/></a>
               </td>
               <td th:text="${inhaber.adresse}"/>
               <td th:text="${inhaber.stadt}"/>

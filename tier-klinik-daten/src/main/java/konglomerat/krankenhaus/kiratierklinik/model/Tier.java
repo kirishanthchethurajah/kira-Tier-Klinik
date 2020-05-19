@@ -1,6 +1,7 @@
 package konglomerat.krankenhaus.kiratierklinik.model;
 
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -14,8 +15,8 @@ import java.util.Set;
 @Table(name = "tiere")
 public class Tier extends BaseEntity{
     @Builder
-    public Tier(Long id, String name, TierTyp tierTyp,  Besitzer besitzer,LocalDate geburtsDatum, Set<Besuch> besuch) {
-        super(id);
+    public Tier(Long kId, String name, TierTyp tierTyp,  Besitzer besitzer,LocalDate geburtsDatum, Set<Besuch> besuch) {
+        super(kId);
         this.name = name;
         this.tierTyp = tierTyp;
         this.besitzer = besitzer;
@@ -33,6 +34,7 @@ public class Tier extends BaseEntity{
     @ManyToOne
     @JoinColumn(name = "owner_id")
     private Besitzer besitzer;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Column(name = "geburts_datum")
     private LocalDate geburtsDatum;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "tier")

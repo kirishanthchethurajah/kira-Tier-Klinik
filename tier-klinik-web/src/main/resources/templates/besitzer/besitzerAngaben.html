@@ -28,9 +28,9 @@
       </tr>
     </table>
   
-    <a th:href="@{{id}/edit(id=${besitzer.id})}" class="btn btn-default">Edit
+    <a th:href="@{{id}/edit(id=${besitzer.KId})}" class="btn btn-default">Edit
       Owner</a>
-    <a th:href="@{{id}/tier/neu(id=${besitzer.id})}" class="btn btn-default">Add
+    <a th:href="@{{id}/tier/neu(id=${besitzer.KId})}" class="btn btn-default">Add
       New Pet</a>
   
     <br />
@@ -48,7 +48,7 @@
             <dt>Birth Date</dt>
             <dd
               th:text="${#temporals.format(tier.geburtsDatum, 'yyyy-MM-dd')}" /></dd>
-            <dt>Type</dt>
+            <dt>Typ</dt>
             <dd th:text="${tier.tierTyp.name}" /></dd>
           </dl>
         </td>
@@ -66,10 +66,10 @@
             </tr>
             <tr>
               <td><a
-                th:href="@{{besitzerId}/tier/{tierId}/edit(besitzerId=${besitzer.id},tierId=${tier.id})}">Edit
+                th:href="@{{besitzerId}/tier/{tierId}/edit(besitzerId=${besitzer.KId},tierKId=${tier.KId})}">Edit
                   Pet</a></td>
               <td><a
-                th:href="@{{besitzerId}/tier/{tierId}/besuch/neu(besitzerId=${besitzer.id},tierId=${tier.id})}">Add
+                th:href="@{{besitzerId}/tier/{tierId}/besuch/neu(besitzerId=${besitzer.KId},tierId=${tier.KId})}">Add
                   Visit</a></td>
             </tr>
           </table>

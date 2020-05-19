@@ -50,15 +50,15 @@ public class BesitzerServiceMap extends AbstractServiceMap<Besitzer, Long> imple
             if(object.getTiere() != null) {
                 object.getTiere().forEach(tier -> {
                     if(tier.getTierTyp() != null){
-                    if (tier.getTierTyp().getId() == null) {
+                    if (tier.getTierTyp().getKId() == null) {
                         tier.setTierTyp(tierTypService.save(tier.getTierTyp()));
                     }} else {
                         throw new RuntimeException("Tier Typ ist nicht blank");
                     }
 
-                    if (tier.getId() == null) {
+                    if (tier.getKId() == null) {
                         Tier tier1 = tierService.save(tier);
-                        tier.setId(tier1.getId());
+                        tier.setKId(tier1.getKId());
                     }
                 });
             }

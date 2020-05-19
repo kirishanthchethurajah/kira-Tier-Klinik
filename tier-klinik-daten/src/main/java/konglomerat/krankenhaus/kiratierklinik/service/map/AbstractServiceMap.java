@@ -18,10 +18,10 @@ public abstract class AbstractServiceMap<T extends BaseEntity, ID extends Long> 
     T save(T object){
         if (object == null) {
             throw new RuntimeException("Object can't be null");
-        } else if (object.getId() == null) {
-            object.setId(findNextId());
+        } else if (object.getKId() == null) {
+            object.setKId(findNextId());
         }
-        map.put(object.getId(), object);
+        map.put(object.getKId(), object);
 
         return object;
     }
